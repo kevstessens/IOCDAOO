@@ -1,9 +1,5 @@
 package daoo.encoder;
 
-import com.sun.istack.internal.NotNull;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,31 +9,25 @@ import junit.framework.TestSuite;
  * To change this template use File | Settings | File Templates.
  */
 
-public class InverseEncoderTest extends TestCase {
+public class InverseEncoderTest extends EncoderTest<InvertEncoder> {
 
+    private static final InvertEncoder encoder = new InvertEncoder();
 
-    public void testEncoder()
-    {
-        InvertEncoder encoder = new InvertEncoder();
-        String s = "Mingus RoxZ";
-        String s2 = encoder.encode(s);
+    public void testEncode(){
+        String s2 = encoder.encode("Mingus RoxZ");
         assertEquals(s2, ("ZxoR sugniM"));
     }
 
-    public void testDecoder()
-    {
-        InvertEncoder encoder = new InvertEncoder();
-        String s = "OtaG";
-        String s2 = encoder.decode(s);
+    public void testDecode() {
+        String s2 = encoder.decode("OtaG");
         assertEquals(s2, ("GatO"));
     }
 
-    public void testEncodeDecode()
-    {
-        InvertEncoder encoder = new InvertEncoder();
+
+   public void testEncodeDecode() {
         String s = "OtaG";
         String s2 = encoder.decode(s);
-        assertTrue(s2.equals("GatO"));
+        assertTrue(s2.equals("OtaG"));
     }
 
 

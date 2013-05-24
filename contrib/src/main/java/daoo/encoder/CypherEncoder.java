@@ -22,25 +22,25 @@ public class CypherEncoder implements MessageEncoder {
     @Override
     public String encode(@NotNull String message) {
         try{
-        Cipher aes = Cipher.getInstance("AES");
+            Cipher aes = Cipher.getInstance("AES");
             aes.init(Cipher.ENCRYPT_MODE, SECRET_KEY);
-        byte[] ciphertext = aes.doFinal(message.getBytes());
+            byte[] ciphertext = aes.doFinal(message.getBytes());
             return ciphertext.toString();
         }catch (Exception e){
             e.printStackTrace();
         }
         return null;
-
     }
+
 
     @Override
     public String decode(@NotNull String message) {
         try{
-        Cipher aes = Cipher.getInstance("AES");
-        aes.init(Cipher.DECRYPT_MODE, SECRET_KEY);
-        String cleartext = new String(aes.doFinal(message.getBytes()));
-            return cleartext;
-    }catch (Exception e){
+            Cipher aes = Cipher.getInstance("AES");
+            aes.init(Cipher.DECRYPT_MODE, SECRET_KEY);
+            byte[] byteMessage = message.getBytes();
+            return new String(aes.doFinal(byteMessage));
+        }catch (Exception e){
             e.printStackTrace();
         }
         return null;
@@ -53,7 +53,7 @@ public class CypherEncoder implements MessageEncoder {
         try {
             digest = MessageDigest.getInstance("SHA");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         digest.update(passphrase.getBytes());
         SecretKeySpec key = new SecretKeySpec(digest.digest(), 0, 16, "AES");
@@ -64,6 +64,7 @@ public class CypherEncoder implements MessageEncoder {
     public static void main(String[] args) {
         CypherEncoder c=new CypherEncoder();
         System.out.println(c.decode(c.encode("pizza party ")));
+
     }
 
 
